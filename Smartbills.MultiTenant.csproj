@@ -4,6 +4,14 @@
     <TargetFramework>net6.0</TargetFramework>
 	  <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Authors>Sébastien Labine</Authors>
+    <Company>Smartbills Technologies Inc.</Company>
+    <Description>Multitenant support for .NET Core</Description>
+    <Copyright>Smartbills Technologies Inc. 2022</Copyright>
+    <PackageProjectUrl>https://github.com/Smartbills/smartbills-dotnet-multitenant</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Smartbills/smartbills-dotnet-multitenant</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

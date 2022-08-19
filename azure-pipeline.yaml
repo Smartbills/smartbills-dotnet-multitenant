@@ -1,0 +1,41 @@
+pool:
+  vmImage: windows-2022
+trigger:
+  branches:
+    include:
+      - "*"
+variables:
+  GH_TOKEN: $(GITHUB_TOKEN)
+steps:
+  - task: PowerShell@2
+    displayName: "Install semantic-release"
+    inputs:
+      targetType: "inline"
+      script: |
+        npm install -g semantic-release @semantic-release/git semantic-release-ado @semantic-release/release-notes-generator
+  - task: PowerShell@2
+    displayName: "Upgrade version"
+    inputs:
+      targetType: "inline"
+      script: |
+        semantic-release
+    env:
+      GH_TOKEN: $(GH_TOKEN)
+  - task: DotNetCoreCLI@2
+    displayName: Build the project
+    inputs:
+      command: "build"
+      projects: |
+        **/*.csproj
+  - task: DotNetCoreCLI@2
+    condition: ne(variables['nextRelease'], '')
+    displayName: Package the project
+    inputs:
+      command: "pack"
+      packagesToPack: "**/*.csproj"
+      versioningScheme: "byEnvVar"
+      versionEnvVar: "nextRelease"
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: "$(Pipeline.Workspace)"
+      publishLocation: "pipeline"
